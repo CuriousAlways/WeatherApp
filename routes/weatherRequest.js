@@ -4,25 +4,26 @@ const express = require('express');
 /** Weather api domain and end point */ 
 const domain = 'api.openweathermap.org'
 const cWeatherEndPoint = 'data/2.5/weather'
+let units = 'metric';
 
 /** Express routes **/
 const router = express.Router();
 router.route('/')
 .get((req,response,next)=>{
 
-  let city = req.query.city.trim();
+  let cityAndCountry = req.query.city.trim();
   //LOG FOR DEBUGGING PURPOSES
-  console.log('requested city : '+city);
-  if(!city || city==='')
+  console.log('requested city : '+cityAndCountry);
+  if(!cityAndCountry || cityAndCountry==='')
   {
     let error = new Error('Bad request');
-    error.status = 401;
+    error.status(401) //= 401;
     next(error);
   }
   else
   {
     //creating url
-    let url = `http://${domain}/${cWeatherEndPoint}?q=${city}&appid=${process.env.apiKey}`;
+    let url = `http://${domain}/${cWeatherEndPoint}?q=${cityAndCountry}&units=${units}&appid=${process.env.apiKey}`;
     //DEBUG 
     console.log('url : '+url);
     //making request to api

@@ -6,6 +6,12 @@ body{
   display: flex;
   flex-direction: column;
  }
+ .navbar-links-custom a{
+   color : #aa950dfc;
+ }
+ .navbar-links-custom a:hover{
+   color : #ffdf00ff;
+ }
  
  #search-box{
    margin-left: 4px;
@@ -64,13 +70,20 @@ body{
     text-align: center;
     margin : 0;
  }
+ .city-coordinates{
+  text-align: center;
+  margin : 0;
+ }
  .weather-logo-main{
     text-align: center;
     margin :10px 0;
  }
+ .max-min-temp{
+   max-height: 70px;
+ }
  .temp{
     text-align: center;
-    margin-left:15px;
+    margin-bottom:0px;
  }
  .extra-info{
     height:100px;
@@ -80,7 +93,7 @@ body{
  }
  .wind-cloud{
    padding : 0px;
-   padding-left : 10px;
+   padding-left : 20px;
  }
  .sunrise-sunset{
    padding: 0px;
@@ -94,7 +107,7 @@ body{
    /* display: none; */
  }
  #footer a{
-    color : #e5cc20fc;
+    color : #aa950dfc;
     text-decoration: none;
  }
  #footer a:hover{

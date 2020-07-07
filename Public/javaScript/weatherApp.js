@@ -1,6 +1,6 @@
 //function that creates card
 //sample call:(patna,IN,25.5,82.3,33,29,37,2,45,'05:45:34','6:10:12','cloudy')
-function createCard(cityName,countryName,lon,lat,temp,tempMin,tempMax,windSpeed,cloudiness,sunrise,sunset,weather)
+function createCard(cityName,countryName,lon,lat,temp,tempMin,tempMax,windSpeed,cloudiness,sunrise,sunset,weather,icon)
 {
   //top div
   let topDiv = document.createElement('div');
@@ -14,14 +14,20 @@ function createCard(cityName,countryName,lon,lat,temp,tempMin,tempMax,windSpeed,
   //country and coordinate 
   let countryPara = document.createElement('p');
   countryPara.classList.add('country-name');
-  countryPara.textContent = `${countryName} ${lat}°N ${lon}°E`;
+  countryPara.textContent = `${countryName}`;
   topDiv.appendChild(countryPara);//country added
+
+  //city coordinates
+  let cityCoordinate = document.createElement('p');
+  cityCoordinate.classList.add('city-coordinates');
+  cityCoordinate.textContent = `${lat}°N  ${lon}°E`;
+  topDiv.appendChild(cityCoordinate);
 
   //weather logo
   let weatherMain = document.createElement('p');
   weatherMain.classList.add('weather-logo-main');
   let weatherImage = document.createElement('img');
-  weatherImage.src = '../Icons/03d.png';//this had to be already fetched and avlbl globally
+  weatherImage.src = `../Icons/${icon}.png`;//this had to be already fetched and avlbl globally
   weatherImage.style.width = '50%';
   weatherImage.title= weather; //passed as argument
   weatherMain.appendChild(weatherImage);
@@ -39,10 +45,34 @@ function createCard(cityName,countryName,lon,lat,temp,tempMin,tempMax,windSpeed,
   topDiv.appendChild(tempPara);//temp added
 
   //min and max temp
-  let minMaxPara = document.createElement('p');
-  minMaxPara.classList.add('temp');
-  minMaxPara.innerHTML = `Max<em style='color:red'>&#9650;</em> ${tempMax}°C  Min<em style='color:rgb(69, 69, 209)'>&#9660;</em> ${tempMin}°C`;
-  topDiv.appendChild(minMaxPara);//minMax temp added 
+  let minMaxDiv = document.createElement('div');
+  minMaxDiv.classList.add('row','align-items-center','extra-info','max-min-temp');
+  //1st Col div inside minMaxRowDiv
+  let minMaxRowDiv = document.createElement('div');
+  minMaxRowDiv.classList.add('col-6');
+  let tempParaMax = document.createElement('p');
+  tempParaMax.classList.add('temp');
+  tempParaMax.innerHTML = `Max<em style='color:red'>&#9650;`;
+  minMaxRowDiv.appendChild(tempParaMax);
+  tempParaMax = document.createElement('p');
+  tempParaMax.classList.add('temp');
+  tempParaMax.textContent = `${tempMax}°C`;
+  minMaxRowDiv.appendChild(tempParaMax);
+  minMaxDiv.appendChild(minMaxRowDiv);
+  //2nd Col div inside minMaxRowDiv
+  minMaxRowDiv = document.createElement('div');
+  minMaxRowDiv.classList.add('col-6');
+  let tempParaMin = document.createElement('p');
+  tempParaMin.classList.add('temp');
+  tempParaMin.innerHTML = `Min<em style='color:rgb(69, 69, 209)'>&#9660;`;
+  minMaxRowDiv.appendChild(tempParaMin);
+  tempParaMin = document.createElement('p');
+  tempParaMin.classList.add('temp');
+  tempParaMin.textContent = `${tempMin}°C`;
+  minMaxRowDiv.appendChild(tempParaMin);
+  minMaxDiv.appendChild(minMaxRowDiv);
+  topDiv.appendChild(minMaxDiv);//minm maxm content added
+  
 
   //Extra info
   let InfoRowDiv = document.createElement('div');
@@ -99,16 +129,50 @@ function createCard(cityName,countryName,lon,lat,temp,tempMin,tempMax,windSpeed,
 
 }
 
+function MakeRequest(url)
+{
+  fetch(url)
+  .then((response)=>{
+    console.log(response);
+    return response.json();
+  })
+  .then((weatherObject)=>{
+    console.log(weatherObject);
+
+    /* parse response */
+    let temp = weatherObject.main.temp;
+    let tempMax = weatherObject.main.temp_max;
+    let tempMin = weatherObject.main.temp_min;
+    let weather = weatherObject.weather[0].main;
+    let windSpeed = weatherObject.wind.speed;
+    let cloudiness = weatherObject.clouds.all;
+    let description = weatherObject.weather[0].description;//planning to add it into header
+    let cityName = weatherObject.name
+    let {lon,lat} = weatherObject.coord;
+    let icon = weatherObject.weather[0].icon;
+    let countryName = countries[weatherObject.sys.country];//countries defined in countries.js
+    let time = new Date(weatherObject.sys.sunrise *1000);
+    let sunrise = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+    time = new Date(weatherObject.sys.sunset *1000);
+    let sunset = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+    /* create and insert element */
+    createCard(cityName,countryName,lon,lat,temp,tempMin,tempMax,windSpeed,cloudiness,sunrise,sunset,weather,icon)
+
+  })
+  .catch((error)=>console.log('Error : '+error)); 
+}
+
+
 
 //adding appropriate event listener
 const cardContainer = document.querySelector('#cards-collection');
 const searchButton = document.querySelector('#submit-button');
 const searchBar = document.querySelector('#search-box');
+const countryDropdown = document.querySelector('#country-select');
 
 searchBar.addEventListener('keyup',(event)=>{
   if(event.key==='Enter')
   {
-    document.activeElement.blur();
     
     if(event.target.value==='')//give alert
     {
@@ -116,20 +180,38 @@ searchBar.addEventListener('keyup',(event)=>{
     }
     else
     {
-      createCard('patna','IN',25.5,82.3,33,29,37,2,45,'05:45:34','6:10:12','cloudy');//here we would first fetch weather data and then connect
+      let url = `http://localhost:8080/weather?${searchBar.name}=${searchBar.value},${countryDropdown.value}`;
+      //debug
+      console.log('url : ',url);
+      
+      MakeRequest(url);
+      // createCard('patna','IN',25.5,82.3,33,29,37,2,45,'05:45:34','6:10:12','cloudy');//here we would first fetch weather data and then connect
+
+      /* resetting to default values */
+      countryDropdown.selectedIndex = 0;
+      document.activeElement.blur();
       event.target.value='';
     }
   }
 });
 searchButton.addEventListener('click',(event)=>{
-  document.activeElement.blur();
+
   if(searchBar.value==='')
   {
     alert('please enter city name');
   }
   else
   {
-    createCard('patna','IN',25.5,82.3,-33,-37,-30,2,45,'05:45:34','6:10:12','cloudy');//here we would first fetch weather data and then connect
+    let url = `http://localhost:8080/weather?${searchBar.name}=${searchBar.value},${countryDropdown.value}`;
+    //debug
+    console.log('url : ',url);
+      
+    MakeRequest(url);
+    // createCard('patna','IN',25.5,82.3,-33,-37,-30,2,45,'05:45:34','6:10:12','cloudy');//here we would first fetch weather data and then connect
+
+    /* resetting to default values */
+    countryDropdown.selectedIndex = 0;
     searchBar.value='';
+    document.activeElement.blur();
   }
 });
