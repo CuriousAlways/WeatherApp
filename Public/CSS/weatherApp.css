@@ -1,0 +1,120 @@
+body{
+  margin : 66px 0 0;
+  min-height: 100vh;
+  background: linear-gradient(rgba(95,159,251,1),rgba(93,229,223,1));/*(#04e0fc,#6b92e7);(#e66465, #9198e5);*/
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+ }
+ 
+ #search-box{
+   margin-left: 4px;
+   font-size: 1.5em;
+   border:solid 1px  rgb(52, 58, 63);
+   border-radius: 20px;
+   outline : none;
+ }
+ #country-select{
+    background-color: white;
+    margin-right:4px;
+    border:solid 1px  rgb(52, 58, 63);
+    border-radius: 20px;
+    outline : none;
+ }
+ .search-container{
+   padding-top : 30px;
+   padding-bottom : 20px; 
+ }
+ #submit-button{
+   margin-left : 0px;
+   padding: 0px;
+   background-color: #30ffa7;
+   max-width :50px;
+   height: 50px;
+   overflow: hidden;
+   border:none;/*solid 2px rgb(52, 58, 63);*/
+   border-radius: 50%;
+ }
+ #cards-container{
+   margin-top : 50px ;
+   margin-bottom :100px;
+ }
+ .card{
+   border-radius: 10px;
+   min-height: 350px;
+   max-width: 250px;
+   margin-left:13px;
+   margin-bottom: 20px;
+   transition: transform 0.5s ease-out;
+   animation: slidein 1.5s 1;/* animation when new card is added*/
+ }
+ .card-background{
+  background: linear-gradient(#e66465, #9198e5);/*(#6b92e7,#04e0fc);*/
+  color : whitesmoke;
+ }
+ .card:hover{
+   transform: scale(1.06);
+ }
+ .city-name{
+    text-align: center;
+    margin : 0;
+    line-height: 0.80;
+ }
+ .country-name{
+    text-align: center;
+    margin : 0;
+ }
+ .weather-logo-main{
+    text-align: center;
+    margin :10px 0;
+ }
+ .temp{
+    text-align: center;
+    margin-left:15px;
+ }
+ .extra-info{
+    height:100px;
+ }
+ .extra-weather-icon{
+    width:30px;
+ }
+ .wind-cloud{
+   padding : 0px;
+   padding-left : 10px;
+ }
+ .sunrise-sunset{
+   padding: 0px;
+ }
+ #footer{
+   margin : 0;
+   padding-top:20px;
+   background-color: rgb(52, 58, 63);
+   color : white;
+   margin-top:auto;
+   /* display: none; */
+ }
+ #footer a{
+    color : #e5cc20fc;
+    text-decoration: none;
+ }
+ #footer a:hover{
+   color : #ffdf00ff;
+ }
+ @media(max-width: 765px){
+   #submit-button{
+      margin-top : 5px;
+      margin-left : 30px;
+      max-width: 45px;
+      height: 45px;
+   }
+ }
+ @keyframes slidein{
+   0%{
+     opacity: 0.2;
+     transform: translateX(-40%);
+   }
+   100%{
+     opacity: 1;
+     transform: translateX(0%);
+   }
+ }

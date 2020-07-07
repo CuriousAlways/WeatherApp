@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>weather App</title>
+  <!-- Bootstrap CSS using CDN for improved online performance -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- custom CSS -->
+  <link rel='stylesheet' href='./CSS/weatherApp.css'>
+</head>
+<body>
+  
+  <!-- <div id='main-content'> -->
+
+    <!-- navigation bar -->
+    <nav class='navbar navbar-expand-sm navbar-dark fixed-top bg-dark'>
+      <div class='container justify-content-left'>
+        <button type='button' class='navbar-toggler' data-toggle='collapse' data-target='#navigation'><span class='navbar-toggler-icon'></span></button>
+        <a href='#' class='navbar-brand ' style="cursor: pointer;"><img src='./logo_v2.png' style='height:40px;'></a>
+
+        <div class='navbar-collapse collapse' id='navigation'>
+          <a href='#' class='nav-link nav-item ml-auto' style="color: rgb(161, 159, 159);">Home</a>
+          <a href='#' class='nav-link nav-item' style="color: white;">About</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- search bar -->
+    <div class='container search-container'>
+      <div class='row justify-content-center' id='Error-message'></div>
+      <div class='row justify-content-center text-align-center'>
+        <select name='country' class='col-5 offset-1 col-md-2 offset-md-1' id='country-select'>
+          <option value=''>--select country--</option>
+          <option value='Afghanistan'>AFGHANISTAN</option>
+          <option value='India'>INDIA</option>
+        </select>
+        <input type='text' name='city' placeholder=" city name" class='col-5 col-md-4 'id='search-box'>
+        <button type='button' class='col-2 offset-9 offset-md-1 col-md-1' id='submit-button'><img src='./search.png' style='width: 20px;'></button>  
+      </div> 
+    </div>
+
+    <!-- TEST CARDS -->
+    <div class='container' id='cards-container'>
+      <div class='row align-items-center justify-content-center' id='cards-collection'>
+        <!-- cards are added here -->
+        <div class='card card-body col-sm-6 col-md-3 card-background'>
+            <h3 class='city-name'>City</h3>
+            <p class='country-name'>countryCode ----&deg; ----&deg;</p>
+            <p class='weather-logo-main'><img src='./Icons/03n.png' style='width:50%' title="cloudy"></p>
+            <p class='temp'><img src='./Icons/thermometer.png' title="temp" style='width:20%;'> ---&deg;</p>
+            <p class='temp'>
+              Max<em style='color:red'>&#9650;</em> ---&deg;  Min<em style='color:rgb(69, 69, 209)'>&#9660;</em> ---&deg;
+            </p>
+            <div class='row align-items-center extra-info'>
+              <div class='col-6 wind-cloud'>
+                <p><img src='./Icons/windSpeed.png' title="wind speed" class='extra-weather-icon'>---m/s</p>
+                <p><img src='./Icons/03d.png' title="cloudiness" class='extra-weather-icon'>---&percnt;</p>
+              </div>
+              <div class='col-6 sunrise-sunset'>
+                <p><img src='./Icons/sunrise.png' title="sunrise" class='extra-weather-icon'>
+                  --:--:--
+                </p>
+                <p><img src='./Icons/sunset.png' title="sunset" class="extra-weather-icon">
+                  --:--:-- 
+                </p>
+              </div>
+            </div>
+        </div>
+      </div>  
+    </div>
+ 
+
+    <!-- footer -->
+    <div id='footer'>
+      <div class='container'>
+        <div class='row justify-content-center'>
+          <div class='col-2 col-md-1'>
+            <a href='#'>home</a>
+            <a href='#'>about</a>
+          </div>
+          <div class='col-2 col-md-1 offset-md-1'>
+            <a href='#'>Github</a>
+            <a href='#'>linkedin</a>
+          </div>
+        </div>
+        <div class='row'>
+          <p class='col-12'style="text-align: center;">Icons made by <a href="https://www.flaticon.com/authors/freepik"
+             title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+          </p>
+        </div>
+        <div class='row'>
+          <p class='col-12'style="text-align: center;">Made with <em style='color:red'>&hearts;</em> by team outcast</p>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+ 
+  <script src="./javaScript/weatherApp.js"></script>
+  
+  <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

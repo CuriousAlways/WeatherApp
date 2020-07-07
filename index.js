@@ -16,10 +16,10 @@ app.use(bodyParser.json())
 app.use('/weather',weatherRequest);
 
 //serving static files
-app.use(express.static(path.join(__dirname,'testFiles')));
+app.use(express.static(path.join(__dirname,'Public')));
 app.get('/',(req,res,next)=>{
   res.statusCode = 200;
-  res.sendFile('form.html',{root:path.join(__dirname,'testFiles')},(error)=>{
+  res.sendFile('weatherApp.html',{root:path.join(__dirname,'Public')},(error)=>{
     if(error)
       {
         let err = new Error(error);
@@ -44,4 +44,4 @@ app.use((err, req, res, next)=>{
 const port = 8080;
 const hostname = 'localhost'
 const server = http.createServer(app);
-server.listen(port,hostname,()=>console.log('server started...'));
+server.listen(port,hostname,()=>console.log('server started at localhost:8080'));
